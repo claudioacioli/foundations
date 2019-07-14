@@ -21,4 +21,7 @@ def create_app(config_name):
     from .restaurants import restaurants as restaurants_blueprint
     app.register_blueprint(restaurants_blueprint, url_prefix='/restaurants')
 
+    from .menu_items import menu_items as menu_items_blueprint
+    app.register_blueprint(menu_items_blueprint, url_prefix='/<int:restaurant_id>/menu')
+
     return app

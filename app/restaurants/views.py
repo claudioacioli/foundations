@@ -2,20 +2,13 @@ from flask import render_template, request, flash, redirect, url_for
 from . import restaurants
 from .forms import CreateRestaurant
 from .. import db
-from ..models import Restaurant, MenuItem
+from ..models import Restaurant
 
 
 @restaurants.route('/')
 def show_restaurants():
     restaurants = db.session.query(Restaurant).all()
     return render_template('restaurants.html', restaurants=restaurants)
-
-
-@restaurants.route('/<int:restaurant_id>/')
-@restaurants.route('/<int:restaurant_id>/menu/')
-def show_menu(restaurant_id):
-    menu_items = db.session.query(MenuItem).filter_by(restaurant_id=restaurant_id).all()
-    return render_template('menus.html', menu_items=menu_items)
 
 
 @restaurants.route('/new', methods=['GET','POST'])
