@@ -35,7 +35,8 @@ class MenuItem(db.Model):
 @app.route('/restaurants/')
 @app.route('/')
 def show_restaurants():
-    return render_template('index.html')
+    restaurants = db.session.query(Restaurant).all()
+    return render_template('restaurants.html', restaurants=restaurants)
 
 
 @app.route('/restaurants/new/')
@@ -72,6 +73,7 @@ def create_menu_item(restaurant_id):
 @app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/edit/')
 def edit_menu_item(restaurant_id, menu_id):
     return ''
+
 
 @app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/delete/')
 def delete_menu_item(restaurant_id, menu_id):
