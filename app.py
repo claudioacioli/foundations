@@ -57,7 +57,8 @@ def delete_restaurant(restaurant_id):
 @app.route('/restaurants/<int:restaurant_id>/')
 @app.route('/restaurants/<int:restaurant_id>/menu/')
 def show_menu(restaurant_id):
-    return 'this page is the menu for restaurant'
+    menu_items = db.session.query(MenuItem).filter_by(restaurant_id=restaurant_id).all()
+    return render_template('menus.html', menu_items=menu_items)
 
 
 @app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/')
