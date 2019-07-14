@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -8,9 +9,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 're
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-
+bootstrap = Bootstrap(app)
 
 class Restaurant(db.Model):
+
     __tablename__ = 'restaurant'
 
     name = db.Column(db.String(80), nullable=False)
@@ -18,6 +20,7 @@ class Restaurant(db.Model):
 
 
 class MenuItem(db.Model):
+    
     __tablename__ = 'menu_item'
 
     name = db.Column(db.String(80), nullable=False)
