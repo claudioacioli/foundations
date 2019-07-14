@@ -1,17 +1,17 @@
 from flask import render_template, request, flash, redirect, url_for
-from . import restaurants
+from . import restaurants as app_restaurants
 from .forms import CreateRestaurant
 from .. import db
 from ..models import Restaurant
 
 
-@restaurants.route('/')
+@app_restaurants.route('/')
 def show_restaurants():
     restaurants = db.session.query(Restaurant).all()
     return render_template('restaurants.html', restaurants=restaurants)
 
 
-@restaurants.route('/new', methods=['GET','POST'])
+@app_restaurants.route('/new', methods=['GET','POST'])
 def create_restaurant():
     if request.method == 'GET':
         return render_template('create_restaurant.html', form=CreateRestaurant())
