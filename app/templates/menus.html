@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block page_content %}
+  {% for messages in get_flashed_messages() %}
+      <div class="alert alert-sm alert-info">{{ messages }}</div>
+  {% endfor %}
   <div style="padding:16px 0">
     <div class="btn-group">
       <a class="btn btn-default btn-sm" href="{{url_for('restaurants.show_restaurants')}}">Back</a>
