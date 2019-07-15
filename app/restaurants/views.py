@@ -1,6 +1,6 @@
 from flask import render_template, request, flash, redirect, url_for
 from . import restaurants as app_restaurants
-from .forms import CreateRestaurant, EditRestaurant
+from .forms import CreateRestaurant, EditRestaurant, DeleteRestaurant
 from .. import db
 from ..models import Restaurant
 
@@ -52,3 +52,26 @@ def edit_restaurant(restaurant_id):
             flash('Restaurant edited!')
             return redirect(url_for('.show_restaurants'))
 
+
+@app_restaurants.route('/<int:restaurant_id>/delete', methods=['GET', 'POST'])
+def delete_restaurant(restaurant_id):
+
+    if request.method == 'GET':
+        restaurant = db.session.query(Restaurant).filter_by(id=restaurant_id).first()
+        if restaurant is not None:
+            form = DeleteRestaurant()
+            return render_template('delete_restaurant.html', form=form, restaurant=restaurant)
+        else:
+            flash('Pay attention, uspected error on delete restaurant')
+            return redirect(url_for('.show_restaurants'))
+
+    if request.method == 'POST':
+        restaurant = db.session.query(Restaurant).filter_by(id=restaurant_id).one()
+        if restaurant is not None:
+            db.session.delete(restaurant)
+            db.session.commit()
+            flash('Restaurant deleted!')
+        else:
+            flash('Pay attention, uspected error on delete restaurant')
+
+        return redirect(url_for('.show_restaurants'))
