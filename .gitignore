@@ -3,3 +3,6 @@ venv/
 __pycache__/
 *.bkp
 *.pyc
+
+#Removido rastreio de alterações no banco de dados
+#git update-index --assume-unchanged restaurantmenu.db
