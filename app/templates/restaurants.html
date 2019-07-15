@@ -14,8 +14,8 @@
       </h4>
       <p class="list-group-item-text">
       <a class="btn btn-default btn-sm" href="{{url_for('menu_items.show_menu',restaurant_id=restaurant.id)}}">Menu items</a>
-        <a class="btn btn-default btn-sm" href="#">Edit</a>
-	<a class="btn btn-default btn-sm" href="#">Delete</a>
+        <a class="btn btn-default btn-sm" href="{{ url_for('.edit_restaurant', restaurant_id=restaurant.id)}}">Edit</a>
+	    <a class="btn btn-default btn-sm" href="#">Delete</a>
       </p> 
     </li>
     {% endfor %}
