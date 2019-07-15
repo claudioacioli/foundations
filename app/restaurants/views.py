@@ -49,5 +49,6 @@ def edit_restaurant(restaurant_id):
             restaurant.name = form.name.data
             db.session.add(restaurant)
             db.session.commit()
+            flash('Restaurant edited!')
             return redirect(url_for('.show_restaurants'))
 
