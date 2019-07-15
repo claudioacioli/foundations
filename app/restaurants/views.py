@@ -1,6 +1,6 @@
 from flask import render_template, request, flash, redirect, url_for
 from . import restaurants as app_restaurants
-from .forms import CreateRestaurant
+from .forms import CreateRestaurant, EditRestaurant
 from .. import db
 from ..models import Restaurant
 
@@ -26,3 +26,28 @@ def create_restaurant():
             return redirect(url_for('.show_restaurants'))
 
         return 'aconteceu algo de errado'
+
+
+@app_restaurants.route('/<int:restaurant_id>/edit', methods=['GET','POSt'])
+def edit_restaurant(restaurant_id):
+
+    if request.method == 'GET':
+        restaurant = db.session.query(Restaurant).filter_by(id=restaurant_id).first()
+        if restaurant is not None:
+            form = EditRestaurant()
+            form.name.data = restaurant.name
+            form.id.data = restaurant.id
+            return render_template('edit_restaurant.html', form=form)
+        else:
+            flash('Pay attention, unspected error on edit restaurant ' + restaurant_id)
+            return redirect(url_for('.show_restaurants'))
+
+    if request.method == 'POST':
+        form = EditRestaurant()
+        restaurant = db.session.query(Restaurant).filter_by(id=restaurant_id).one()
+        if restaurant is not None and form.validate_on_submit():
+            restaurant.name = form.name.data
+            db.session.add(restaurant)
+            db.session.commit()
+            return redirect(url_for('.show_restaurants'))
+
