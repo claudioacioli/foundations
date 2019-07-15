@@ -12,3 +12,7 @@ class EditRestaurant(FlaskForm):
     id = HiddenField()
     name = StringField('Name:', validators=[DataRequired()])
     submit = SubmitField('Edit!')
+
+
+class DeleteRestaurant(FlaskForm):
+    submit = SubmitField('Delete')
